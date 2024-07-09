@@ -1,0 +1,68 @@
+<br><br><br><br><br><br>
+
+<div>
+    <h2>Admin Menu Management</h2>
+    <button class="add" (click)="openAddMenuModal()">Add Menu</button>
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Image</th>
+        <th>Actions</th>
+      </tr>
+      <tr *ngFor="let menu of menus">
+        <td>{{ menu.title }}</td>
+        <td>{{ menu.price }}</td>
+        <td><img [src]="menu.image" alt="Menu Image"></td>
+        <td>
+          <button class="edit" (click)="openEditMenuModal(menu)">Edit</button>
+          <button class="delete" (click)="confirmDelete(menu.id)">Delete</button>
+        </td>
+      </tr>
+    </table>
+</div>
+  
+<!-- Modal for adding/editing menu -->
+<div class="col-lg-8">
+    <div *ngIf="showModal">
+        <div class="modal">
+            <div class="modal-content">
+                <span class="close" (click)="closeModal()">&times;</span>
+                <h2>{{isEdit ? 'Edit' : 'Add'}} Menu</h2>
+                <form [formGroup]="menuForm" (ngSubmit)="onSubmit()">
+                    <div class="row gy-4">
+                        
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="title" formControlName="title" placeholder="Title">
+                            <div *ngIf="submitted && f['title'].errors" class="error">
+                                <div *ngIf="f['title'].errors['required']">Title is required</div>
+                                <div *ngIf="f['title'].errors['maxlength']">Title cannot be more than 15 characters</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" id="price" formControlName="price" placeholder="Price">
+                            <div *ngIf="submitted && f['price'].errors" class="error">
+                                <div *ngIf="f['price'].errors['required']">Price is required</div>
+                                <div *ngIf="f['price'].errors['min']">Price cannot be less than 5</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <input type="file" class="form-control" id="image" (change)="onFileChange($event)" [required]="!isEdit">
+                            <div *ngIf="submitted && f['image'].errors" class="error">
+                                <div *ngIf="f['image'].errors['required']">Image is required</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="delete">{{isEdit ? 'Update' : 'Add'}} Menu</button>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br><br>

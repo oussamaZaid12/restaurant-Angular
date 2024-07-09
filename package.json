@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "ngx-file-drop": "^16.0.0"
+  }
+}
